@@ -1,0 +1,26 @@
+{
+  "name": "@comoelagua.org/bra2text",
+  "version": "1.0.0",
+  "description": "Braille ASCII Spanish to plain text",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariouged/bra2text.git"
+  },
+  "keywords": [
+    "Braille",
+    "ASCII",
+    "brl",
+    "brf",
+    "bra"
+  ],
+  "author": "Mario U",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/mariouged/bra2text/issues"
+  },
+  "homepage": "https://github.com/mariouged/bra2text#readme"
+}
