@@ -29,13 +29,42 @@ const dataProvider = [
     '#a #b #c #d #e #f #g #h #i #j',
     '1 2 3 4 5 6 7 8 9 0'
   ],
-  [ 'Number simple', '#abc', '123' ],
-  [ 'Number together from one to zero', '#abcdefghij', '1234567890' ],
-  [ 'Number with repeats', '#iiihhhggg', '999888777' ],
-  [ 'Number with decimals', '#be.gj', '25.70' ],
-  [ 'Number with thousan separator', '#abc,def', '123,456' ],
-  [ 'Number with thousan separator and decimals', '#def,ghi.ab', '456,789.12' ],
-  [ 
+  [
+    'Number simple',
+    '#abc',
+    '123'
+  ],
+  [
+    'Number together from one to zero',
+    '#abcdefghij',
+    '1234567890'
+  ],
+  [
+    'Number with repeats',
+    '#iiihhhggg',
+    '999888777'
+  ],
+  [
+    'Number with decimals',
+    '#be.gj',
+    '25.70'
+  ],
+  [
+    'Number with thousan separator',
+    '#abc,def',
+    '123,456'
+  ],
+  [
+    'Number with thousan separator and decimals',
+    '#def,ghi.ab',
+    '456,789.12'
+  ],
+  [
+    'Numbers between parenthesis',
+    '(#a, #b, #c)',
+    '(1, 2, 3)'
+  ],
+  [
     'Sentence with capital and spaces',
     '{louis {braille was a {french educator and the inventor of a reading and writing system',
     'Louis Braille was a French educator and the inventor of a reading and writing system'
@@ -45,15 +74,23 @@ const dataProvider = [
     '{braille numbers has a prefix #cdef braille {c{h{a{r and it is braille dots #jjaaaa',
     'Braille numbers has a prefix 3456 braille CHAR and it is braille dots 001111'
   ],
-  [ 'Spanish accents in small chars, acute', '( $ / 0 ) 8', 'á é í ó ú ü'],
-  [ 'Spanish accents in Capital chars, acute', '{( {$ {/ {0 {) {8', 'Á É Í Ó Ú Ü' ],
+  [
+    'Spanish accents in small chars, acute',
+    '( $ / 0 ) 8',
+    'á é í ó ú ü'
+  ],
+  [
+    'Spanish accents in Capital chars, acute',
+    '{( {$ {/ {0 {) {8',
+    'Á É Í Ó Ú Ü'
+  ],
   [
     'Spanish sentence with capital, numbers and accents',
     '{volver(n los p(jaros entre el #d 0 #e de abril.',
     'Volverán los pájaros entre el 4 ó 5 de abril.'
   ],
-  [ 'Spanish n tilde', '7 {7', 'ñ Ñ' ],
-  [ 'Catalonia cedilla', '& {&', 'ç Ç' ],
+  ['Spanish n tilde', '7 {7', 'ñ Ñ'],
+  ['Catalonia cedilla', '& {&', 'ç Ç'],
   [
     'French accents circumflex. Without ê conflict with spanish á ( Left parenthesis',
     '1 3 4 5 {1 {2 {3 {4 {5',
@@ -97,15 +134,15 @@ function fileBra2textIso8859(path) {
 
   readFile(path, (err, bytesBra) => {
     if (err) throw err
-    
+
     const bytesAscii = bytesBra2bytesAscii(bytesBra)
-    
-    const fileDest = path.slice(0, -4)+'-8859.txt'
+
+    const fileDest = path.slice(0, -4) + '-8859.txt'
     const data = Buffer.from(bytesAscii)
     writeFile(fileDest, data, (err) => {
       if (err) throw err
     })
-    
+
   })
 }
 
@@ -116,27 +153,24 @@ async function fileBra2textUtf8(path) {
 
   readFile(path, (err, bytesBra) => {
     if (err) throw err
-    
+
     const bytesAscii = bytesBra2bytesAscii(bytesBra)
-    
+
     let strAscii = ''
-    for(let i = 0; i < bytesAscii.length; i++) {
+    for (let i = 0; i < bytesAscii.length; i++) {
       const byte = bytesAscii[i]
       strAscii += String.fromCharCode(byte)
     }
 
-    const fileDest = path.slice(0, -4)+'-utf8.txt'
+    const fileDest = path.slice(0, -4) + '-utf8.txt'
     try {
       writeFileSync(fileDest, strAscii)
     } catch (err) {
       console.error(err)
       throw err
     }
-    
+
   })
 }
 
 fileBra2textUtf8('./debug/example-braille-ascii.bra')
-
-/** Real test */
-fileBra2textUtf8('./examples/bra-files/0327499-001.bra')

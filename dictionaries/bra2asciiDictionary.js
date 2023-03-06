@@ -13,6 +13,7 @@ export const braNumbers2asciiDictionary = {
   104: 56, // #h is 8 Eight
   105: 57, // #i is 9 Nine
   106: 48, // #j is 0 Zero
+  41: 41,  // ) Right parenthesis is ) Right parenthesis between numbers
 }
 
 export const bra2asciiDictionary = {

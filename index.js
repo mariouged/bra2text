@@ -21,6 +21,9 @@ export function bytesBra2bytesAscii(bytesBra) {
       if (currentByteBra) {
         bytesAscii.push(bra2asciiDictionary[currentByteBra] || currentByteBra)
       }
+    } else if (40 === currentByteBra && 35 === nextBraByte) {
+      // ( Left parenthesis and # Number
+      bytesAscii.push(currentByteBra)
     } else if (123 === currentByteBra && nextBraByte && bra2asciiDictionary[currentByteBra+'-'+nextBraByte]) {
       // { Left curly bracket is prefix Capital letters
       // convert to Capital
