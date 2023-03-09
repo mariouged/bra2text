@@ -10,7 +10,7 @@ export function bytesBra2bytesAscii(bytesBra) {
     if (currentByteBra > 127) {
       // non ASCII, is UTF-8, same byte
       bytesAscii.push(currentByteBra)
-    } else if (35 === currentByteBra && nextBraByte) {
+    } else if (35 === currentByteBra && braNumbers2asciiDictionary[nextBraByte]) {
       // # Number is prefix number, begin number
       // convert next to Number
       currentByteBra = bytesBra[++i]
@@ -24,7 +24,10 @@ export function bytesBra2bytesAscii(bytesBra) {
     } else if (40 === currentByteBra && 35 === nextBraByte) {
       // ( Left parenthesis and # Number
       bytesAscii.push(currentByteBra)
-    } else if (123 === currentByteBra && nextBraByte && bra2asciiDictionary[currentByteBra+'-'+nextBraByte]) {
+    } else if (
+      123 === currentByteBra
+      && nextBraByte
+      && bra2asciiDictionary[currentByteBra+'-'+nextBraByte]) {
       // { Left curly bracket is prefix Capital letters
       // convert to Capital
       bytesAscii.push(bra2asciiDictionary[currentByteBra+'-'+nextBraByte])
@@ -35,9 +38,10 @@ export function bytesBra2bytesAscii(bytesBra) {
         46 === currentByteBra || // . Period could be prefix modificator
         95 === currentByteBra || // _ Underscore could be prefix modificator
         64 === currentByteBra    // @ At sign could be prefix modificator
-      ) && nextBraByte && 32 !== nextBraByte // space Space
+      ) && 32 !== nextBraByte // space Space
+        && bra2asciiDictionary[currentByteBra+'-'+nextBraByte]
     ) {
-      bytesAscii.push(bra2asciiDictionary[currentByteBra+'-'+nextBraByte] || currentByteBra)
+      bytesAscii.push(bra2asciiDictionary[currentByteBra+'-'+nextBraByte])
       i++
     } else {
       // default

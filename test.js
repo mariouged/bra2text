@@ -1,12 +1,6 @@
 import assert from 'node:assert';
-import { readFile, writeFile, writeFileSync } from 'node:fs';
-import { strBra2strAscii, bytesBra2bytesAscii } from "./index.js"
-
-function simpleTest(Scenario, input, expected) {
-  console.log(`Scenario ${Scenario}`)
-  const actual = strBra2strAscii(input)
-  assert.equal(actual, expected)
-}
+import { strBra2strAscii, bytesBra2bytesAscii  } from './index.js'
+import { bra2asciiDictionary } from './dictionaries/bra2asciiDictionary.js'
 
 const dataProvider = [
   [
@@ -123,54 +117,37 @@ const dataProvider = [
   ['Special char / Slash', '_,', '/'],
 ]
 
-/** run all test from data provider */
+/** test strings from data provider */
+function simpleTest(Scenario, input, expected) {
+  console.log(`Scenario ${Scenario}`)
+  const actual = strBra2strAscii(input)
+  assert.equal(actual, expected)
+}
+
 for (const test of dataProvider) {
   simpleTest(test[0], test[1], test[2])
 }
 
 
-/** Usage file braille to text ISO-8859 */
-function fileBra2textIso8859(path) {
-
-  readFile(path, (err, bytesBra) => {
-    if (err) throw err
-
-    const bytesAscii = bytesBra2bytesAscii(bytesBra)
-
-    const fileDest = path.slice(0, -4) + '-8859.txt'
-    const data = Buffer.from(bytesAscii)
-    writeFile(fileDest, data, (err) => {
-      if (err) throw err
-    })
-
-  })
+/** test bytes bra to bytes ascii */
+const providerBraBtes = []
+const expectedAsciiBytes = []
+for (const prop in bra2asciiDictionary) {
+  if (prop.indexOf('-') > -1) {
+    const parts = prop.split('-')
+    providerBraBtes.push(parseInt(parts[0]))
+    providerBraBtes.push(parseInt(parts[1]))
+  } else {
+    providerBraBtes.push(parseInt(prop))
+  }
+  expectedAsciiBytes.push(bra2asciiDictionary[prop])
 }
 
-fileBra2textIso8859('./debug/example-braille-ascii.bra')
+const actualBytesAscii = bytesBra2bytesAscii(providerBraBtes)
 
-/** Usage file braille to text utf8 */
-async function fileBra2textUtf8(path) {
-
-  readFile(path, (err, bytesBra) => {
-    if (err) throw err
-
-    const bytesAscii = bytesBra2bytesAscii(bytesBra)
-
-    let strAscii = ''
-    for (let i = 0; i < bytesAscii.length; i++) {
-      const byte = bytesAscii[i]
-      strAscii += String.fromCharCode(byte)
-    }
-
-    const fileDest = path.slice(0, -4) + '-utf8.txt'
-    try {
-      writeFileSync(fileDest, strAscii)
-    } catch (err) {
-      console.error(err)
-      throw err
-    }
-
-  })
+for (let i = 0; i <= 127; i++) {
+  const expected = expectedAsciiBytes[i]
+  const actual = actualBytesAscii[i]
+  console.log(`Scenario test byte ${actual}`)
+  assert.equal(actual, expected)
 }
-
-fileBra2textUtf8('./debug/example-braille-ascii.bra')
