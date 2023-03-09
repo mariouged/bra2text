@@ -1,6 +1,6 @@
 {
   "name": "@comoelagua.org/bra2text",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Braille ASCII Spanish to plain text",
   "main": "index.js",
   "type": "module",

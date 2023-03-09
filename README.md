@@ -2,8 +2,13 @@
 Braille ASCII to text
 
 ## usage
-```
-/** Usage file braille to text ISO-8859 */
+```javascript
+import { readFile, writeFile, writeFileSync } from 'node:fs';
+import { bytesBra2bytesAscii } from '@comoelagua.org/bra2text'
+
+/**
+ * Usage file braille to text ISO-8859
+ */
 function fileBra2textIso8859(path) {
 
   readFile(path, (err, bytesBra) => {
@@ -21,5 +26,4 @@ function fileBra2textIso8859(path) {
 }
 
 fileBra2textIso8859('./debug/example-braille-ascii.bra')
-
 ```
