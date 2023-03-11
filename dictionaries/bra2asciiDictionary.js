@@ -89,7 +89,7 @@ export const bra2asciiDictionary = {
   48: 243, // 0 Zero is ó small o acute
   49: 226, // 1 One is â a circumflex
   50: 40, // 2 Two is ( Left parenthesis
-  // 50: 234, // 2 Two is ê e circumflex
+  // 50: 234, // 2 Two is ê e circumflex CONFLICT
   51: 238, // 3 Three is î i circumflex
   52: 244, // 4 Four is ô o circumflex
   53: 251, // 5 Five is û u circumflex

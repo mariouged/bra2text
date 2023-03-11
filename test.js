@@ -86,7 +86,7 @@ const dataProvider = [
   ['Spanish n tilde', '7 {7', 'ñ Ñ'],
   ['Catalonia cedilla', '& {&', 'ç Ç'],
   [
-    'French accents circumflex. Without ê conflict with spanish á ( Left parenthesis',
+    'French accents circumflex. Without ê CONFLICT with ( Left parenthesis',
     '1 3 4 5 {1 {2 {3 {4 {5',
     'â î ô û Â Ê Î Ô Û'
   ],
