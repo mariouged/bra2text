@@ -53,6 +53,7 @@ export const bra2asciiDictionary = {
   33: 33, // ! Exclamation mark
   34: 34, // " Double quote
   35: 35, // # Number is prefix number, begin number
+  /* use braNumbers2asciiDictionary
   '35-97': 49, // #a is 1 One
   '35-98': 50, // #b is 2 Two
   '35-99': 51, // #c is 3 Three
@@ -63,6 +64,7 @@ export const bra2asciiDictionary = {
   '35-104': 56, // #h is 8 Eight
   '35-105': 57, // #i is 9 Nine
   '35-106': 48, // #j is 0 Zero
+  */
   36: 233, // $ Dollar sign is é small e acute
   37: 124, // % Percent is | Vertical bar
   '37-115': 36, // %s Percent with s small is $ Dollar sign
@@ -210,4 +212,3 @@ export const bra2asciiDictionary = {
   126: 126, // ~ Tilde
   127: 127, // DEL Delete
 }
-

@@ -132,6 +132,7 @@ for (const test of dataProvider) {
 /** test bytes bra to bytes ascii */
 const providerBraBtes = []
 const expectedAsciiBytes = []
+const inputBraBytes = []
 for (const prop in bra2asciiDictionary) {
   if (prop.indexOf('-') > -1) {
     const parts = prop.split('-')
@@ -141,13 +142,14 @@ for (const prop in bra2asciiDictionary) {
     providerBraBtes.push(parseInt(prop))
   }
   expectedAsciiBytes.push(bra2asciiDictionary[prop])
+  inputBraBytes.push(prop)
 }
 
 const actualBytesAscii = bytesBra2bytesAscii(providerBraBtes)
 
-for (let i = 0; i <= 127; i++) {
+for (let i = 0; i < actualBytesAscii.length; i++) {
   const expected = expectedAsciiBytes[i]
   const actual = actualBytesAscii[i]
-  console.log(`Scenario test byte ${actual}`)
+  console.log(`Test byte ${inputBraBytes[i]} is ascii ${actual}`)
   assert.equal(actual, expected)
 }
