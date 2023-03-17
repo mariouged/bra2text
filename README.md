@@ -2,28 +2,32 @@
 Braille ASCII to text
 
 ## usage
+See the `usage.js` full example
+
 ```javascript
-import { readFile, writeFile, writeFileSync } from 'node:fs';
-import { bytesBra2bytesAscii } from '@comoelagua.org/bra2text'
-
 /**
- * Usage file braille to text ISO-8859
+ * Usage file braille to text utf8
  */
-function fileBra2textIso8859(path) {
+async function fileBra2textUtf8(sourceFile, destFile) {
 
-  readFile(path, (err, bytesBra) => {
+  readFile(sourceFile, (err, bytesBra) => {
     if (err) throw err
 
     const bytesAscii = bytesBra2bytesAscii(bytesBra)
 
-    const fileDest = path.slice(0, -4) + '-8859.txt'
-    const data = Buffer.from(bytesAscii)
-    writeFile(fileDest, data, (err) => {
-      if (err) throw err
-    })
+    let contentUtf8 = ''
+    for (let i = 0; i < bytesAscii.length; i++) {
+      const byte = bytesAscii[i]
+      contentUtf8 += String.fromCharCode(byte)
+    }
+
+    try {
+      writeFileSync(destFile, contentUtf8)
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
 
   })
 }
-
-fileBra2textIso8859('./debug/example-braille-ascii.bra')
 ```
