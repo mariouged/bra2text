@@ -208,7 +208,8 @@ export const bra2asciiDictionary = {
   '123-52': 212, // {4 Four is Ô O circumflex
   '123-53': 219, // {5 Five is Û U circumflex
   124: 41, // | Vertical bar is ) Right parenthesis
-  125: 125, // } Right curly bracket
+  // 125: 125, // } Right curly bracket
+  125: 32, // } Right curly bracket not recognized by screen reader
   126: 126, // ~ Tilde
   127: 127, // DEL Delete
 }
