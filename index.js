@@ -2,7 +2,9 @@ import { bra2asciiDictionary, braNumbers2asciiDictionary } from './dictionaries/
 
 export function bytesBra2bytesAscii(bytesBra) {
   const bytesAscii = []
-  
+  //const bytesAscii = [8288] // U+2060 WORD JOINER // 8288 === '\u2060'.codePointAt(0) // String.fromCharCode(8288) === '\u2060'
+  //const bytesAscii = [65279] // The BOM character U+FEFF ZERO WIDTH NO-BREAK SPACE // 65279 === '\uFEFF'.codePointAt(0) // String.fromCharCode(65279) === '\uFEFF'
+
   for(let i = 0; i < bytesBra.length; i++) {
     let currentByteBra = bytesBra[i]
     const nextBraByte = bytesBra[1 + i]

@@ -104,7 +104,7 @@ export const bra2asciiDictionary = {
   61: 61, // = Equality sign
   62: 62, // > Greater than
   63: 63, // ? Question mark is ? Question mark
-  //63: 191, // ? Question mark is ¿ open Question mark
+  // 63: 191, // ? Question mark is ¿ open Question mark
   64: 64, // @ At sign
   '64-108': 123, // @l @ At sign and l Small l is { Left curly bracket
   65: 65, // A Capital A

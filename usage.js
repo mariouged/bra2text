@@ -1,47 +1,26 @@
-import { readFile, writeFile, writeFileSync } from 'node:fs';
-//import { bytesBra2bytesAscii } from "./index.js"
-import { bytesBra2bytesAscii } from '@comoelagua.org/bra2text'
-
-/**
- * Usage file braille to text ISO-8859
- */
-function fileBra2textIso8859(path) {
-
-  readFile(path, (err, bytesBra) => {
-    if (err) throw err
-
-    const bytesAscii = bytesBra2bytesAscii(bytesBra)
-
-    const fileDest = path.slice(0, -4) + '-8859.txt'
-    const data = Buffer.from(bytesAscii)
-    writeFile(fileDest, data, (err) => {
-      if (err) throw err
-    })
-
-  })
-}
-
-fileBra2textIso8859('./debug/example-braille-ascii.bra')
+import { readFile, writeFileSync, readdirSync, statSync, existsSync, mkdirSync } from 'node:fs'
+import path from 'node:path'
+import { bytesBra2bytesAscii } from "./index.js"
+//import { bytesBra2bytesAscii } from '@comoelagua.org/bra2text'
 
 /**
  * Usage file braille to text utf8
  */
-async function fileBra2textUtf8(path) {
+async function fileBra2textUtf8(sourceFile, destFile) {
 
-  readFile(path, (err, bytesBra) => {
+  readFile(sourceFile, (err, bytesBra) => {
     if (err) throw err
 
     const bytesAscii = bytesBra2bytesAscii(bytesBra)
 
-    let strAscii = ''
+    let contentUtf8 = ''
     for (let i = 0; i < bytesAscii.length; i++) {
       const byte = bytesAscii[i]
-      strAscii += String.fromCharCode(byte)
+      contentUtf8 += String.fromCharCode(byte)
     }
 
-    const fileDest = path.slice(0, -4) + '-utf8.txt'
     try {
-      writeFileSync(fileDest, strAscii)
+      writeFileSync(destFile, contentUtf8)
     } catch (err) {
       console.error(err)
       throw err
@@ -50,4 +29,44 @@ async function fileBra2textUtf8(path) {
   })
 }
 
-fileBra2textUtf8('./debug/example-braille-ascii.bra')
+/**
+ * Usage directory files braille to text utf8
+ */
+function dirBra2Text(sourceDir, destDir) {
+  try {
+    // read all files in dir, NOT recursive
+    const sourceFilesNames = readdirSync(sourceDir).map(fileName => {
+      return path.join(sourceDir, fileName);
+    })
+
+    // mkdir destination dir
+    if (!existsSync(destDir)) {
+      mkdirSync(destDir)
+    }
+
+    for (const sourceFileName of sourceFilesNames) {
+
+      const stats = statSync(sourceFileName);
+      if (!stats.isFile()) {
+        continue
+      }
+      if ('.bra' !== path.extname(sourceFileName)) {
+        continue
+      }
+
+      // destination name with extension txt
+      const basename = path.basename(sourceFileName)
+      const destName = basename.slice(0, -4) + '.txt'
+      const destFileName = path.normalize(destDir + path.sep + destName)
+
+      //console.log(path.normalize(sourceFileName))
+      fileBra2textUtf8(sourceFileName, destFileName)
+
+      console.log(path.normalize(destFileName))
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+dirBra2Text('./examples/bra-files', './examples/text-files')
